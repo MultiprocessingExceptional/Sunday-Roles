@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.date-input-compact {
+  text-align: center !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+
+.date-input-compact::-webkit-calendar-picker-indicator {
+  margin-left: -8px !important;
+  margin-right: 4px !important;
+  padding: 0 !important;
+  cursor: pointer;
+}
+
+.date-input-compact::-webkit-datetime-edit {
+  padding-right: 0 !important;
+}
