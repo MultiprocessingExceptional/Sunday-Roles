@@ -16,7 +16,7 @@
       { "name": "MS. RIYA ROY" },
       { "name": "KUM. JOANNE RINO" },
       { "name": "MRS. SARA JIJU" },
-      { "name": "MRS. SARAH PAULOSE" },
+      { "name": "MS. SARAH PAULOSE" },
       { "name": "KUM. KRIPA SAJI" }
     ]
   },
@@ -40,7 +40,7 @@
     { "name": "MR. SAJI K Y" },
     { "name": "MR. RINO NINAN" },
     { "name": "MS. RIYA ROY" },
-    { "name": "MRS. SARAH PAULOSE" },
+    { "name": "MS. SARAH PAULOSE" },
     { "name": "MRS. SUMA MATHEW" }
   ],
   "reading": [
@@ -52,7 +52,7 @@
     { "name": "KUM. JOANNE RINO" },
     { "name": "MAST. JOSHUA ABRAHAM" },
     { "name": "MRS. SARA JIJU" },
-    { "name": "MRS. SARAH PAULOSE" },
+    { "name": "MS. SARAH PAULOSE" },
     { "name": "KUM. KRIPA SAJI" }
   ],
   "intercessory": [
@@ -67,7 +67,7 @@
     { "name": "MRS. MERCY PAULOSE" },
     { "name": "MS. RIYA ROY" },
     { "name": "MRS. SUSAN ROY" },
-    { "name": "MRS. SARAH PAULOSE" }
+    { "name": "MS. SARAH PAULOSE" }
   ],
   "offertoryprayer": [
     { "name": "MRS. EMIE RINO" },
@@ -88,7 +88,7 @@
     { "name": "MR. T T MATHEW" },
     { "name": "MRS. SARA JIJU" },
     { "name": "MR. JIJU ABRAHAM" },
-    { "name": "MRS. SARAH PAULOSE" },
+    { "name": "MS. SARAH PAULOSE" },
     { "name": "MRS. JESSY JOJI" }
   ]
 }
