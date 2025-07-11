@@ -17,6 +17,15 @@ const pdfHeadings = [
   "Offertory Prayer",
 ];
 
+// Fields that should not wrap text
+const NO_WRAP_FIELDS = [
+  "Scripture Passage",
+  "MV",
+  "Scripture Reading",
+  "Intercessory Prayer",
+  "Offertory Prayer",
+];
+
 // Function to generate dynamic filename based on first and third months
 function generateFileName(data) {
   if (!data || data.length === 0) {
@@ -116,6 +125,16 @@ function formatMultiInputField(value) {
   return value || "";
 }
 
+// Helper function to format fields that should not wrap individual entries
+function formatNoWrapField(value) {
+  if (Array.isArray(value)) {
+    const filteredValues = value.filter((v) => v && v.trim() !== "");
+    // Keep separate lines but prevent wrapping within each entry
+    return filteredValues.map((v) => v.replace(/\s+/g, " ")).join("\n");
+  }
+  return value ? value.replace(/\s+/g, " ") : "";
+}
+
 export function generatePDF(
   data,
   bgColor,
@@ -179,22 +198,51 @@ export function generatePDF(
 
         if (heading === "Date") {
           value = formattedDate;
+        } else if (NO_WRAP_FIELDS.includes(heading)) {
+          // Use no-wrap formatting for specified fields
+          value = formatNoWrapField(value);
         } else if (
           ["Scripture Reading", "Scripture Passage", "MV"].includes(heading)
         ) {
           value = formatMultiInputField(value);
         }
 
+        // Determine overflow behavior based on field type
+        const overflowBehavior = NO_WRAP_FIELDS.includes(heading)
+          ? "visible"
+          : "linebreak";
+
         return {
           content: value,
           styles: {
             halign: "center",
             valign: "middle",
-            overflow: "linebreak",
+            overflow: overflowBehavior,
             cellPadding: cellPadding,
           },
         };
       });
+    });
+
+    // Create column styles with specific settings for no-wrap fields
+    const columnStyles = {
+      [messageThemeIndex]: {
+        cellWidth: 60, // Fixed width
+        overflow: "linebreak",
+      },
+    };
+
+    // Add column styles for no-wrap fields
+    NO_WRAP_FIELDS.forEach((fieldName) => {
+      const fieldIndex = pdfHeadings.findIndex(
+        (heading) => heading === fieldName
+      );
+      if (fieldIndex !== -1) {
+        columnStyles[fieldIndex] = {
+          overflow: "visible",
+          cellWidth: "wrap", // Allow cell to expand to fit content
+        };
+      }
     });
 
     autoTable(doc, {
@@ -211,12 +259,7 @@ export function generatePDF(
         valign: "middle",
         textColor: [0, 0, 0],
       },
-      columnStyles: {
-        [messageThemeIndex]: {
-          cellWidth: 60, // Fixed width
-          overflow: "linebreak",
-        },
-      },
+      columnStyles,
       headStyles: {
         fillColor: bgColor,
         textColor: textColor,

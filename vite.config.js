@@ -3,7 +3,5 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  css: {
-    postcss: "./postcss.config.cjs",
-  },
+  base: "/Sunday-Roles/", // Your repo name with slashes
 });
