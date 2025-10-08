@@ -13,21 +13,17 @@
     "kids": [
       { "name": "KUM. JESSINA JOJI" },
       { "name": "KUM. JYOTSNA JOJI" },
-      { "name": "MS. RIYA ROY" },
       { "name": "KUM. JOANNE RINO" },
       { "name": "MRS. SARA JIJU" },
-      { "name": "MS. SARAH PAULOSE" },
-      { "name": "KUM. KRIPA SAJI" }
+      { "name": "MS. SARAH PAULOSE" }
     ]
   },
   "openingprayer": [
     { "name": "MR. SIJIN SAJI" },
     { "name": "MR. VISHAL PAUL" },
-    { "name": "MR. ABEY MATHEW" },
     { "name": "MR. PETER VARKEY" },
     { "name": "MR. SAJI K Y" },
     { "name": "MR. M T PAULOSE" },
-    { "name": "MR. JOEL NESAN" },
     { "name": "MR. T T MATHEW" },
     { "name": "MR. RINO NINAN" },
     { "name": "MR. BIJU ABRAHAM" }
@@ -48,24 +44,20 @@
     { "name": "MR. JIJU ABRAHAM" },
     { "name": "KUM. JESSINA JOJI" },
     { "name": "KUM. JYOTSNA JOJI" },
-    { "name": "MS. RIYA ROY" },
     { "name": "KUM. JOANNE RINO" },
     { "name": "MAST. JOSHUA ABRAHAM" },
     { "name": "MRS. SARA JIJU" },
     { "name": "MS. SARAH PAULOSE" },
-    { "name": "KUM. KRIPA SAJI" }
   ],
   "intercessory": [
     { "name": "MRS. EMIE RINO" },
     { "name": "MR. SIJIN SAJI" },
     { "name": "MRS. MOLLYKUTTY JOSEPH" },
     { "name": "MR. VISHAL PAUL" },
-    { "name": "MR. ABEY MATHEW" },
     { "name": "MR. SAJI K Y" },
     { "name": "MRS. ANNAMMA SAJI" },
     { "name": "MRS. SUMA MATHEW" },
     { "name": "MRS. MERCY PAULOSE" },
-    { "name": "MS. RIYA ROY" },
     { "name": "MRS. SUSAN ROY" },
     { "name": "MS. SARAH PAULOSE" }
   ],
@@ -75,15 +67,12 @@
     { "name": "MRS. MOLLYKUTTY JOSEPH" },
     { "name": "MRS. SUSAN BIJU" },
     { "name": "MR. VISHAL PAUL" },
-    { "name": "MR. ABEY MATHEW" },
     { "name": "MR. PETER VARKEY" },
     { "name": "MR. SAJI K Y" },
     { "name": "MR. ROY P JOHN" },
     { "name": "MRS. ANNAMMA SAJI" },
     { "name": "MRS. SUMA MATHEW" },
     { "name": "MRS. MERCY PAULOSE" },
-    { "name": "MS. RIYA ROY" },
-    { "name": "MR. JOEL NESAN" },
     { "name": "MRS. SUSAN ROY" },
     { "name": "MR. T T MATHEW" },
     { "name": "MRS. SARA JIJU" },
