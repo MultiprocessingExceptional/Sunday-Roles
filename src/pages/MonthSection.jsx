@@ -139,78 +139,104 @@ export default function MonthSection({
   };
 
   // Auto-fill scripture portions, MV, and message theme based on date
-  const autoFillScriptureData = (sunday) => {
-    const date = new Date(sunday.fields.Date);
-    const dateStr = formatDateToDDMMYYYY(date);
+  const autoFillScriptureData = useCallback(
+    (sunday) => {
+      const date = new Date(sunday.fields.Date);
+      const dateStr = formatDateToDDMMYYYY(date);
 
-    // Get scripture data from the scripturePortions JSON
-    const scriptureData = scripturePortions?.scripturePortions?.[
-      activeYear
-    ]?.find((item) => item.date === dateStr);
-
-    if (scriptureData) {
-      const updatedFields = { ...sunday.fields };
-
-      // Fill Scripture Passage as array
-      if (scriptureData.scriptures.length >= 2) {
-        updatedFields["Scripture Passage"] = [
-          scriptureData.scriptures[0].passage,
-          scriptureData.scriptures[1].passage,
-        ];
-        updatedFields["MV"] = [
-          scriptureData.scriptures[0].mv,
-          scriptureData.scriptures[1].mv,
-        ];
-      } else if (scriptureData.scriptures.length === 1) {
-        updatedFields["Scripture Passage"] = [
-          scriptureData.scriptures[0].passage,
-          "",
-        ];
-        updatedFields["MV"] = [scriptureData.scriptures[0].mv, ""];
-      } else {
-        updatedFields["Scripture Passage"] = ["", ""];
-        updatedFields["MV"] = ["", ""];
-      }
-
-      // Fill Message Theme
-      const messageThemeObj = scriptureData.scriptures.find(
-        (s) => s.messageTheme
+      console.log(
+        `🔍 Looking for scripture data for date: ${dateStr}, year: ${activeYear}`
       );
-      if (messageThemeObj) {
-        updatedFields["Message Theme"] = messageThemeObj.messageTheme;
+
+      // Get scripture data from the scripturePortions JSON
+      const scriptureData = scripturePortions?.scripturePortions?.[
+        activeYear
+      ]?.find((item) => item.date === dateStr);
+
+      if (scriptureData) {
+        console.log(`✅ Found scripture data:`, scriptureData);
+        const updatedFields = { ...sunday.fields };
+
+        // Fill Scripture Passage as array
+        if (scriptureData.scriptures.length >= 2) {
+          updatedFields["Scripture Passage"] = [
+            scriptureData.scriptures[0].passage,
+            scriptureData.scriptures[1].passage,
+          ];
+          updatedFields["MV"] = [
+            scriptureData.scriptures[0].mv,
+            scriptureData.scriptures[1].mv,
+          ];
+        } else if (scriptureData.scriptures.length === 1) {
+          updatedFields["Scripture Passage"] = [
+            scriptureData.scriptures[0].passage,
+            "",
+          ];
+          updatedFields["MV"] = [scriptureData.scriptures[0].mv, ""];
+        } else {
+          updatedFields["Scripture Passage"] = ["", ""];
+          updatedFields["MV"] = ["", ""];
+        }
+
+        // Fill Message Theme
+        const messageThemeObj = scriptureData.scriptures.find(
+          (s) => s.messageTheme
+        );
+        if (messageThemeObj) {
+          updatedFields["Message Theme"] = messageThemeObj.messageTheme;
+        }
+
+        // Keep Message field empty for manual entry
+        if (!updatedFields["Message"]) {
+          updatedFields["Message"] = "";
+        }
+
+        return { ...sunday, fields: updatedFields };
+      } else {
+        console.log(`⚠️ No scripture data found for ${dateStr}`);
       }
 
-      // Keep Message field empty for manual entry
-      if (!updatedFields["Message"]) {
-        updatedFields["Message"] = "";
-      }
+      return sunday;
+    },
+    [activeYear, scripturePortions]
+  );
 
-      return { ...sunday, fields: updatedFields };
-    }
+  const generateSundaysWithScriptureData = useCallback(
+    (monthIndex, year) => {
+      console.log(
+        `📅 Generating Sundays for month ${monthIndex + 1}, year ${year}`
+      );
+      const generatedSundays = getSundaysInMonth(monthIndex, year).map(
+        (date) => {
+          console.log(`  - Sunday date: ${formatDateToYYYYMMDD(date)}`);
+          return {
+            id: date.getTime() + Math.random(),
+            fields: normalizeArrayFields({
+              Date: formatDateToYYYYMMDD(date),
+            }),
+            originalFields: {},
+            isMerged: false,
+          };
+        }
+      );
 
-    return sunday;
-  };
-
-  const generateSundaysWithScriptureData = (monthIndex, year) => {
-    const generatedSundays = getSundaysInMonth(monthIndex, year).map(
-      (date) => ({
-        id: date.getTime() + Math.random(),
-        fields: normalizeArrayFields({
-          Date: formatDateToYYYYMMDD(date),
-        }),
-        originalFields: {},
-        isMerged: false,
-      })
-    );
-
-    // Auto-fill scripture data for each Sunday
-    return generatedSundays.map((sunday) => autoFillScriptureData(sunday));
-  };
+      // Auto-fill scripture data for each Sunday
+      return generatedSundays.map((sunday) => autoFillScriptureData(sunday));
+    },
+    [autoFillScriptureData]
+  );
 
   useEffect(() => {
     if (hasInitializedRef.current) return;
 
+    console.log(
+      `🎬 Initializing MonthSection for month ${monthIndex}, year ${activeYear}`
+    );
+
     if (initialData && initialData.sundays && initialData.sundays.length > 0) {
+      console.log(
+        `📦 Using initial data with ${initialData.sundays.length} sundays`
+      );
       // Auto-fill scripture data for existing sundays
       const normalized = initialData.sundays.map((sunday) => {
         const normalizedSunday = {
@@ -223,6 +249,7 @@ export default function MonthSection({
       setSelectedMonth(initialData.selectedMonth);
       setSundays(normalized);
     } else {
+      console.log(`🆕 Generating fresh data for month ${monthIndex}`);
       const generated = generateSundaysWithScriptureData(
         monthIndex,
         activeYear
@@ -232,10 +259,18 @@ export default function MonthSection({
 
     setIsInitialized(true);
     hasInitializedRef.current = true;
-  }, [initialData?.selectedMonth, initialData?.sundays?.length]);
+  }, [
+    initialData?.selectedMonth,
+    initialData?.sundays?.length,
+    monthIndex,
+    activeYear,
+    autoFillScriptureData,
+    generateSundaysWithScriptureData,
+  ]);
 
   const handleMonthChange = useCallback(
     (newMonth) => {
+      console.log(`🔄 Changing month from ${selectedMonth} to ${newMonth}`);
       setIsTransitioning(true);
 
       // Save current data before switching
@@ -247,11 +282,14 @@ export default function MonthSection({
       const currentMonthIndex = monthOptions.indexOf(newMonth);
       const newSundays = getSundaysInMonth(currentMonthIndex, activeYear);
 
+      console.log(`📆 New month has ${newSundays.length} Sundays`);
+
       // Check if we have saved data for the new month
       const savedData = savedDataByMonth[newMonth];
 
       let generated;
       if (savedData && savedData.length > 0) {
+        console.log(`💾 Using saved data for ${newMonth}`);
         // Use saved data, but ensure dates match the new month's Sundays and re-apply scripture data
         generated = newSundays.map((date, index) => {
           const savedSunday = savedData[index];
@@ -279,6 +317,7 @@ export default function MonthSection({
           }
         });
       } else {
+        console.log(`🆕 Creating fresh data for ${newMonth}`);
         // No saved data, create fresh with scripture data
         generated = generateSundaysWithScriptureData(
           currentMonthIndex,
@@ -295,7 +334,14 @@ export default function MonthSection({
         setIsTransitioning(false);
       }, 300);
     },
-    [activeYear, selectedMonth, sundays, savedDataByMonth, scripturePortions]
+    [
+      activeYear,
+      selectedMonth,
+      sundays,
+      savedDataByMonth,
+      autoFillScriptureData,
+      generateSundaysWithScriptureData,
+    ]
   );
 
   const registerDataCallback = useCallback(() => {
@@ -602,17 +648,37 @@ export default function MonthSection({
               <tr key={sunday.id} className="even:bg-gray-100 relative">
                 <td className="border-slate-300 text-center px-2">
                   <input
-                    type="date"
+                    type="text"
+                    placeholder="DD/MM/YYYY"
                     className="w-full border border-slate-300 rounded text-xs focus:outline-none date-input-compact"
                     style={{ height: "48px" }}
-                    value={sunday.fields["Date"] || ""}
+                    value={
+                      sunday.fields["Date"]
+                        ? formatDateToDDMMYYYY(new Date(sunday.fields["Date"]))
+                        : ""
+                    }
                     onChange={(e) => {
-                      handleInputChange(index, "Date", e.target.value);
-                      setTimeout(() => {
-                        const updated = [...sundays];
-                        updated[index] = autoFillScriptureData(updated[index]);
-                        setSundays(updated);
-                      }, 100);
+                      const input = e.target.value;
+                      // Parse DD/MM/YYYY to YYYY-MM-DD for internal storage
+                      const parts = input.split(/[/-]/);
+                      if (parts.length === 3) {
+                        const [dd, mm, yyyy] = parts;
+                        if (dd && mm && yyyy && yyyy.length === 4) {
+                          const isoDate = `${yyyy}-${mm.padStart(2, "0")}-${dd.padStart(2, "0")}`;
+                          handleInputChange(index, "Date", isoDate);
+                          setTimeout(() => {
+                            const updated = [...sundays];
+                            updated[index] = autoFillScriptureData(
+                              updated[index]
+                            );
+                            setSundays(updated);
+                          }, 100);
+                        } else {
+                          handleInputChange(index, "Date", input);
+                        }
+                      } else {
+                        handleInputChange(index, "Date", input);
+                      }
                     }}
                   />
                 </td>
@@ -737,7 +803,7 @@ export default function MonthSection({
                               activeSuggestionIndex[subKey] ?? -1;
 
                             return (
-                              <div key={subKey} className="mb-1 relative">
+                              <div key={subIdx} className="mb-1 relative">
                                 <input
                                   ref={(el) => {
                                     if (el) inputRefs.current[subKey] = el;
