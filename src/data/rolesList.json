@@ -20,7 +20,6 @@
   },
   "openingprayer": [
     { "name": "MR. SIJIN SAJI" },
-    { "name": "MR. VISHAL PAUL" },
     { "name": "MR. PETER VARKEY" },
     { "name": "MR. SAJI K Y" },
     { "name": "MR. M T PAULOSE" },
@@ -30,11 +29,11 @@
   ],
   "praiseandworship": [
     { "name": "MR. SIJIN SAJI" },
-    { "name": "MR. VISHAL PAUL" },
     { "name": "MR. PETER VARKEY" },
     { "name": "MR. SAJI K Y" },
     { "name": "MR. RINO NINAN" },
-    { "name": "MS. SARAH PAULOSE" }
+    { "name": "MS. SARAH PAULOSE" },
+    { "name": "MR. NELSON JOSEPH" }
   ],
   "reading": [
     { "name": "MAST. JONATHAN RINO" },
@@ -43,14 +42,12 @@
     { "name": "KUM. JYOTSNA JOJI" },
     { "name": "KUM. JOANNE RINO" },
     { "name": "MAST. JOSHUA ABRAHAM" },
-    { "name": "MRS. SARA JIJU" },
     { "name": "MS. SARAH PAULOSE" }
   ],
   "intercessory": [
     { "name": "MRS. EMIE RINO" },
     { "name": "MR. SIJIN SAJI" },
     { "name": "MRS. MOLLYKUTTY JOSEPH" },
-    { "name": "MR. VISHAL PAUL" },
     { "name": "MR. SAJI K Y" },
     { "name": "MRS. ANNAMMA SAJI" },
     { "name": "MRS. MERCY PAULOSE" },
@@ -62,14 +59,12 @@
     { "name": "MR. SIJIN SAJI" },
     { "name": "MRS. MOLLYKUTTY JOSEPH" },
     { "name": "MRS. SUSAN BIJU" },
-    { "name": "MR. VISHAL PAUL" },
     { "name": "MR. PETER VARKEY" },
     { "name": "MR. SAJI K Y" },
     { "name": "MR. ROY P JOHN" },
     { "name": "MRS. ANNAMMA SAJI" },
     { "name": "MRS. MERCY PAULOSE" },
     { "name": "MRS. SUSAN ROY" },
-    { "name": "MRS. SARA JIJU" },
     { "name": "MR. JIJU ABRAHAM" },
     { "name": "MS. SARAH PAULOSE" },
     { "name": "MRS. JESSY JOJI" }
